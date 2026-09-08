@@ -70,10 +70,10 @@ M308 S1 P"e0temp" Y"thermistor" A"Nozzle" T100000 B4267 C7.06e-8 ; configure sen
 ; Heaters
 M950 H0 C"bedheat" T0 ; create heater #0
 M143 H0 P0 T0 C0 S120 A0 ; configure heater monitor #0 for heater #0
-M307 H0 R2.43 D5.5 E1.35 K0.56 B0 ; configure model of heater #0
+M307 H0 R0.168 K0.150:0.000 D5.67 E1.35 S1.00 B0 ; bed model from M303 H0 S100, 2026-09-08 (same as config-override.g)
 M950 H1 C"e0heat" T1 ; create heater #1
 M143 H1 P0 T1 C0 S290 A0 ; configure heater monitor #0 for heater #1
-M307 H1 R2.43 D5.5 E1.35 K0.56 B0 ; configure model of heater #1
+M307 H1 R7.845 K0.743:0.444 D3.56 E1.35 S1.00 B0 V24.1 ; hotend model from M303 T0 S250, 2026-09-08, bare block (same as config-override.g)
 
 ; Heated beds
 M140 P0 H0 ; configure heated bed #0
