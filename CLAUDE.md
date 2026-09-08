@@ -1,0 +1,31 @@
+# Mercury One.1 (Ender 5 Plus frame) on Duet 2 Ethernet — project brief
+
+RepRapFirmware config for a Zero G Mercury One.1 CoreXY conversion of an Ender 5 Plus,
+driven by a Duet 2 Ethernet (RRF 3.6.0, DWC 3.6). This repo is the source of truth for
+`sys/`; the SD card is the deploy target. `FIRST-RUN.md` is the commissioning checklist
+and running status. `reference/` holds the 2020 Cartesian config this replaced.
+
+## Hardware
+- Toolhead: Rapido 2 hotend (Semitec 104NT-4 thermistor, B4267 C7.06e-8), Sherpa Mini
+  clone extruder (1.0 A 1.8° pancake motor, 50:10), BLTouch on `exp.heater3` / `zprobe.in`.
+- Fans: hotend fan on `fan0` (thermostatic 45 °C), part cooling on `fan2`, `fan1` unused.
+- Bed: stock Ender 5 Plus (B4092), two Z motors on one driver, T8x4 leadscrews (800 steps/mm).
+- Endstops: X max (right), Y max (rear). Bed clips: usable area 0–365 × 0–332, endstops sit
+  10 mm / 13 mm beyond it (homing macros `G92` the true position with `M564 S0` around it).
+- Network: `http://10.0.1.22`, hostname `MercuryOne`, no password (default `reprap`).
+
+## Workflow
+- Talk to the printer with `scripts/duet.sh` (pull / push / gcode / model). Read-only checks
+  are fine to run unattended; anything that moves or heats is done with the user at the
+  machine, one step at a time, and they confirm what they saw.
+- After editing `sys/*`, `scripts/duet.sh push` then either `M999` or `M98 P"config.g"`.
+- `M500` writes `sys/config-override.g` on the card (heater models). Pull before committing.
+
+## Hard-won rules (2026-09-08)
+- `G30 S-1` leaves the bed AT the trigger point. Always `G1 Z10` before the next probe,
+  otherwise the pin deploys against the bed, the BLTouch faults, and the bed can crash.
+- Re-sending `M558 ... P9` at runtime recreates the probe and wipes `G31`. Re-send `G31`.
+- Never fire probes back-to-back from a script; wait for idle, then a couple of seconds.
+- `deployprobe0.g` has `G4 P500`, `M558` has `R0.5`. Keep them.
+- The Duet HTTP session times out in 8 s and rapid connects exhaust sockets: reconnect
+  before each request, sleep between bulk transfers, use curl (urllib's encoding is rejected).

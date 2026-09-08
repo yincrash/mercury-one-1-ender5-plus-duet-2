@@ -1,0 +1,32 @@
+#!/bin/zsh
+# Small helper for talking to the Duet 2 Ethernet over its HTTP API.
+#   scripts/duet.sh pull            # download every file in 0:/sys into ./sys
+#   scripts/duet.sh push [files...] # upload given files (default: all of ./sys) with CRC + read-back check
+#   scripts/duet.sh gcode 'M115'    # send a G-code and print the reply
+#   scripts/duet.sh model 'heat.heaters[0]'   # query the object model
+# Set DUET_HOST to override the address. The Duet's HTTP session lasts 8 s and the W5500
+# has few sockets, so we reconnect before every request and pause between bulk transfers.
+set -e
+H="http://${DUET_HOST:-10.0.1.22}"
+PW="${DUET_PASSWORD:-reprap}"
+cd "$(dirname "$0")/.."
+now() { date +%Y-%m-%dT%H:%M:%S; }
+conn() { curl -s -m 10 "$H/rr_connect?password=$PW&time=$(now)" >/dev/null; }
+enc() { python3 -c 'import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1]))' "$1"; }
+crc() { python3 -c 'import zlib,sys;print("%08x"%(zlib.crc32(open(sys.argv[1],"rb").read())&0xffffffff))' "$1"; }
+case "$1" in
+  pull)
+    conn; curl -s -m 20 "$H/rr_filelist?dir=0:/sys" | python3 -c 'import json,sys;print("\n".join(f["name"] for f in json.load(sys.stdin)["files"] if f["type"]=="f"))' | while read -r f; do
+      conn; curl -s -m 60 "$H/rr_download?name=0:/sys/$f" -o "sys/$f"; echo "pulled $f"; sleep 1; done ;;
+  push)
+    shift; files=("$@"); [ ${#files} -eq 0 ] && files=(sys/*)
+    for f in "${files[@]}"; do b=$(basename "$f")
+      conn; r=$(curl -s -m 120 -X POST --data-binary "@$f" "$H/rr_upload?name=0:/sys/$b&time=$(now)&crc32=$(crc "$f")"); sleep 2
+      conn; if [ "$r" = '{"err":0}' ] && curl -s -m 120 "$H/rr_download?name=0:/sys/$b" | cmp -s - "$f"; then echo "ok $b"; else echo "FAILED $b: $r"; exit 1; fi; sleep 1
+    done ;;
+  gcode)
+    conn; curl -s -m 20 "$H/rr_gcode?gcode=$(enc "$2")" >/dev/null; sleep "${3:-2}"; conn; curl -s -m 20 "$H/rr_reply"; echo ;;
+  model)
+    conn; curl -s -m 20 "$H/rr_model?key=$(enc "$2")&flags=d99" | python3 -m json.tool ;;
+  *) sed -n '2,8p' "$0"; exit 1 ;;
+esac
