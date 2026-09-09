@@ -31,9 +31,11 @@ Rule: always `G28` (or at least `G28 Z`) between G32 adjustments and G29.
 Second mesh after `G28` (cold): min 0.006, max 0.122, mean 0.062, deviation 0.034 mm. Loaded.
 Mesh is NOT loaded at boot; put `G29 S1` in the print start g-code after homing.
 
+2026-09-09: extruder calibrated: `M92 E585` (verified: 50 mm commanded = 50 mm delivered),
+`M906 E800` (600 mA skipped against the Rapido; idler tension must be set, it was loose).
+
 Next, in order:
-1. Extruder calibration (section 7).
-2. Hot re-level (G32) and hot mesh (G29) before the first print.
+1. Hot re-level (G32) and hot mesh (G29), then the first print with `G29 S1` in start g-code.
 Open config TODOs: `G31 X/Y/Z`, `M557`, `M671` + bed.g points, `M92 E`, Z max in `M208`.
 
 ## 0. Before uploading

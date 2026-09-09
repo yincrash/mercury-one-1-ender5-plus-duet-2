@@ -34,8 +34,8 @@ M201 X2000 Y2000 Z100 ; set accelerations (mm/s^2)  ; raise XY later once input 
 ; Extruders
 M584 E3 ; set extruder mapping
 M350 E16 I1 ; configure microstepping with interpolation
-M906 E600 ; set extruder driver currents  ; Sherpa Mini clone motor is 1.0 A rated (Amazon B0CNPG9QB2), 600 mA = 60%
-M92 E720 ; configure steps per mm  ; Sherpa Mini 50:10, 1.8deg, 16x = 200*16*5/22.23 ; TODO calibrate with 100 mm extrusion test
+M906 E800 ; set extruder driver currents  ; Sherpa Mini clone motor is 1.0 A rated (Amazon B0CNPG9QB2); 600 mA skipped against the Rapido at 220 C, 800 mA does not
+M92 E585 ; configure steps per mm  ; measured 2026-09-09: 720 delivered 61.5 mm per 50 commanded (clone gearing is not 50:10)
 M566 E300 ; set maximum instantaneous speed changes (mm/min)
 M203 E6000 ; set maximum speeds (mm/min)
 M201 E1500 ; set accelerations (mm/s^2)
