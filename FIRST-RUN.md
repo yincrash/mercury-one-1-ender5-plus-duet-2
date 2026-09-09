@@ -34,8 +34,13 @@ Mesh is NOT loaded at boot; put `G29 S1` in the print start g-code after homing.
 2026-09-09: extruder calibrated: `M92 E585` (verified: 50 mm commanded = 50 mm delivered),
 `M906 E800` (600 mA skipped against the Rapido; idler tension must be set, it was loose).
 
-Next, in order:
-1. Hot re-level (G32) and hot mesh (G29), then the first print with `G29 S1` in start g-code.
+2026-09-09 afternoon: hot pass at bed 80 C / hotend 150 C: G32 corrections all within 0.04 mm
+(no knob changes); hot mesh saved: min 0.028, max 0.127, mean 0.072, deviation 0.029 mm.
+Incident: the first hot G28 pinched the toolhead umbilical against the X endstop; cable re-routed,
+all toolhead electronics verified OK afterwards. Keep the umbilical clear of the right gantry end.
+
+COMMISSIONING COMPLETE. Next: first print (PrusaSlicer profile in slicer/), then tune pressure
+advance (M572) and input shaping (M593). Still open: verify M208 Z max against the frame.
 Open config TODOs: `G31 X/Y/Z`, `M557`, `M671` + bed.g points, `M92 E`, Z max in `M208`.
 
 ## 0. Before uploading
