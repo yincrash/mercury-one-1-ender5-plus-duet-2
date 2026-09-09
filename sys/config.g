@@ -57,7 +57,7 @@ M574 Y2 P"ystop" S1 ; configure Y axis endstop
 M574 Z1 S2 ; configure Z axis endstop
 
 ; Bed levelling screws (manual bed levelling assistant, used by bed.g; order must match the G30 P points there)
-M671 X32.9:332.9:332.9:32.9 Y35.5:37.5:297.5:295.5 P0.7 ; measured 2026-09-09 with the probe pin: front-left, front-right, rear-right, rear-left; M4 x 0.7 pitch
+M671 X32.9:332.9:332.9:32.9 Y35.5:37.5:297.5:295.5 P0.55 ; measured 2026-09-09 with the probe pin: front-left, front-right, rear-right, rear-left. P = effective mm per knob turn at the probe point (measured 0.55; thread is M4x0.7). Knob clockwise seen from below = corner DOWN
 
 ; Mesh Bed Compensation
 M557 X30:330 Y30:300 S60:54 ; define grid for mesh bed compensation  ; 6x6; TODO: recompute once G31 X/Y offsets are measured so every probe point is on the bed

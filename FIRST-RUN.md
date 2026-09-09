@@ -23,8 +23,13 @@ Nozzle fitted and hot-tightened at 250 C. G31 Z0.7 is now INVALID (nozzle is the
 2026-09-09: probe offsets measured: `G31 X-25.1 Y-23.0 Z1.485`. Mesh grid and screw points
 unchanged (still within reach). Z homing verified against paper.
 
+2026-09-09: bed screws measured with the probe pin, M671 set. Knob sense: CLOCKWISE seen from
+BELOW lowers the corner; effective travel 0.55 mm/turn at the probe point (M671 P0.55).
+Levelled cold to within 0.055 mm in 5 passes; first G29 mesh taken cold (redo hot before printing).
+
 Next, in order:
-1. Bed screws + G32/G29 (section 6), extruder calibration (7).
+1. Extruder calibration (section 7).
+2. Hot re-level (G32) and hot mesh (G29) before the first print.
 Open config TODOs: `G31 X/Y/Z`, `M557`, `M671` + bed.g points, `M92 E`, Z max in `M208`.
 
 ## 0. Before uploading
