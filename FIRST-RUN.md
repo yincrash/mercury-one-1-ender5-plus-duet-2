@@ -15,15 +15,16 @@ Placeholders still in config.g (grep for `TODO`):
 Done: firmware 3.6.0 + config uploaded (step 0), motors/endstops/BLTouch verified (1),
 XY limits measured and homing macros fixed with G92 (2), Z homed and probe repeatable
 to 0.004 mm (3), part fan verified, bed PID tuned (R0.168 K0.150 D5.67, predicted max
-rise 108 C) and saved with `M500` to config-override.g. Heaters and motors off.
+rise 108 C) and saved with `M500` to config-override.g.
+2026-09-08 morning: `G28` clean (26 s). Hotend PID tuned bare (R7.845 K0.743:0.444 D3.56,
+predicted rise 573 C), both models now also in config.g. Hotend fan verified at 45 C.
+Nozzle fitted and hot-tightened at 250 C. G31 Z0.7 is now INVALID (nozzle is the reference).
 
-Next morning, in order:
-1. Power on, `G28`, check DWC shows no config errors.
-2. Hotend PID tune with the bare block: `M303 T0 S250`, watch the hotend fan start at 45 C,
-   then `M500`.
-3. Fit the nozzle, heat to 250 C, hot-tighten.
-4. Probe X/Y offset and trigger height (section 5). Then update `G31`, recompute `M557`.
-5. Bed screws + G32/G29 (6), extruder calibration (7).
+2026-09-09: probe offsets measured: `G31 X-25.1 Y-23.0 Z1.485`. Mesh grid and screw points
+unchanged (still within reach). Z homing verified against paper.
+
+Next, in order:
+1. Bed screws + G32/G29 (section 6), extruder calibration (7).
 Open config TODOs: `G31 X/Y/Z`, `M557`, `M671` + bed.g points, `M92 E`, Z max in `M208`.
 
 ## 0. Before uploading

@@ -48,7 +48,7 @@ M669 K1 ; configure CoreXY kinematics
 
 ; Probes
 M558 K0 P9 C"^zprobe.in" H5 F300:120 T6000 R0.5 ; configure BLTouch probe via slot #0; fast approach 5 mm/s, final probe 2 mm/s; R0.5 recovery time before probing
-G31 P500 X-25 Y-25 Z0.7 ; set Z probe trigger value, offset and trigger height  ; TODO: X/Y are tool placeholders, measure probe-to-nozzle offset; Z via paper test once nozzle is fitted
+G31 P500 X-25.1 Y-23.0 Z1.485 ; probe offset (sharpie-dot) and trigger height (paper test, 3 probes within 0.005 mm) measured 2026-09-09
 M950 S0 C"exp.heater3" ; create servo #0 for BLtouch
 
 ; Endstops
