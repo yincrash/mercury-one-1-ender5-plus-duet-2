@@ -27,9 +27,9 @@ M350 X16 Y16 Z16 I1 ; configure microstepping with interpolation
 M906 X800 Y800 Z800 ; set axis driver currents
 M92 X80 Y80 Z800 ; configure steps per mm
 M208 X0:365 Y0:332 Z0:400 ; usable area, measured 2026-09-08: 0,0 = front-left clear of bed clips; endstops sit at X375 Y345 (set by G92 in homing macros); TODO: Z max
-M566 X600 Y600 Z30 P1 ; set maximum instantaneous speed changes (mm/min)  ; Z from old E5+ config; P1 = jerk policy recommended for CoreXY
-M203 X12000 Y12000 Z500 ; set maximum speeds (mm/min)  ; 200 mm/s XY; Z from old E5+ config
-M201 X2000 Y2000 Z100 ; set accelerations (mm/s^2)  ; raise XY later once input shaping (M593) is tuned
+M566 X480 Y480 Z30 P1 ; set maximum instantaneous speed changes (mm/min)  ; 8 mm/s XY (~Klipper SCV 5); Z from old E5+ config; P1 = jerk policy recommended for CoreXY
+M203 X15000 Y15000 Z500 ; set maximum speeds (mm/min)  ; 250 mm/s XY, the untuned/stock-motor consensus for the Mercury One.1 (2026-09-09 survey); Z from old E5+ config
+M201 X3000 Y3000 Z100 ; set accelerations (mm/s^2)  ; untuned at 800 mA; expect 5000-6000 after input shaping (M593), more needs 2 A-class motors
 
 ; Extruders
 M584 E3 ; set extruder mapping

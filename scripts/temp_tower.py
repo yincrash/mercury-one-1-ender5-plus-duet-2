@@ -24,12 +24,14 @@ ap.add_argument('--base', type=float, default=0.0)
 a = ap.parse_args()
 
 lines = open(a.src).read().splitlines()
+# make the start gcode wait for the first band's temperature instead of the profile temperature
+lines = [re.sub(r'^M109 S[\d.]+', f'M109 S{a.start:g}', ln) if ln.startswith('M109 S') else ln for ln in lines]
 out, band_seen, in_body, first_layer_done = [], -1, False, False
 temps_used = []
 for ln in lines:
     if ln.startswith(';LAYER_CHANGE'):
         in_body = True
-    if in_body and re.match(r'^M10[49]\b', ln):
+    if in_body and re.match(r'^M10[49]\b', ln) and not re.search(r'\bS0\b', ln):  # keep the end-gcode M104 S0
         out.append('; ' + ln + ' (removed by temp_tower.py)'); continue
     out.append(ln)
     m = re.match(r'^;Z:([\d.]+)', ln)
