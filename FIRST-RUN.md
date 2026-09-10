@@ -39,8 +39,12 @@ Mesh is NOT loaded at boot; put `G29 S1` in the print start g-code after homing.
 Incident: the first hot G28 pinched the toolhead umbilical against the X endstop; cable re-routed,
 all toolhead electronics verified OK afterwards. Keep the umbilical clear of the right gantry end.
 
-COMMISSIONING COMPLETE. Next: first print (PrusaSlicer profile in slicer/), then tune pressure
-advance (M572) and input shaping (M593). Still open: verify M208 Z max against the frame.
+COMMISSIONING COMPLETE.
+2026-09-09/10: first print (Voron design cube, PETG 245/80) succeeded: good first layer, XY ~29.7
+by ruler (calipers pending), corner blobs + overhang droop in the recessed letters. Temperature
+tower 255->225 printed (gcodes/, scripts/temp_tower.py). Next: pick temp, PA tower
+(scripts/pa_tower.py), then input shaping (M593) from a dark-filament ringing print.
+Still open: verify M208 Z max against the frame.
 Open config TODOs: `G31 X/Y/Z`, `M557`, `M671` + bed.g points, `M92 E`, Z max in `M208`.
 
 ## 0. Before uploading

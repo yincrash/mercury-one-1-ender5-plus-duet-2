@@ -9,7 +9,11 @@ and running status. `reference/` holds the 2020 Cartesian config this replaced.
 - Toolhead: Rapido 2 hotend (Semitec 104NT-4 thermistor, B4267 C7.06e-8), Sherpa Mini
   clone extruder (1.0 A 1.8° pancake motor, 50:10), BLTouch on `exp.heater3` / `zprobe.in`.
 - Fans: hotend fan on `fan0` (thermostatic 45 °C), part cooling on `fan2`, `fan1` unused.
-- Bed: stock Ender 5 Plus (B4092), two Z motors on one driver, T8x4 leadscrews (800 steps/mm).
+- XY motors: Fabreeko Honey Badger `42HS48-25044A` (kit motors): NEMA 17, 48 mm, 1.8°, 2.5 A rated,
+  ~1.25 Ω / 1.8 mH / 54 N·cm / 68 g·cm² (generic 42HS48-2504 family figures). 24 V PSU. Back-EMF
+  math clears 300 mm/s with room to spare; acceleration is limited by current, not by the motors.
+- Bed: stock Ender 5 Plus (B4092), two stock Creality `42-34` Z motors (0.8 A rated, 34 mm) wired in series on one driver,
+  T8x4 leadscrews (800 steps/mm).
 - Endstops: X max (right), Y max (rear). Bed clips: usable area 0–365 × 0–332, endstops sit
   10 mm / 13 mm beyond it (homing macros `G92` the true position with `M564 S0` around it).
 - Network: `http://10.0.1.22`, hostname `MercuryOne`, no password (default `reprap`).
