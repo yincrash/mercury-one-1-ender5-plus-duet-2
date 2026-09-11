@@ -53,7 +53,11 @@ If your hardware matches the table above these need no changes:
   onto the print, re-probes Z with the BLTouch at the front-left mesh point, and lays a short
   purge line before resuming. It does not depend on the
   3 mm emergency lift having finished before the PSU died. Keep the front-left corner of the bed
-  (about 70 x 70 mm) clear of prints you want to be able to resume.
+  (about 70 x 70 mm) clear of prints you want to be able to resume. Caveat: the resume only works
+  if the part is still stuck to the bed when the bed comes back to temperature. PETG on glass
+  releases itself as the glass cools, so a Benchy that sat through a full cool-down popped off
+  during the resumed layers. A brim, a wider footprint, or a PEI surface changes that; a quick
+  cut with the bed still warm resumes fine.
 - The slicer bundle, apart from the print temperatures and pressure advance, which are per filament.
 
 ## What you must measure or tune on your own machine

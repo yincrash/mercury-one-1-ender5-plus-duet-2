@@ -60,3 +60,6 @@ Newest at the bottom.
   reordered: wait for the nozzle only (`M116 P0`, quick, releases it from the print), home, park
   at the front-left corner, wait for the bed there, probe, then a short purge line at Y8 replaces
   the blind 4 mm unretract. Not yet re-tested with a power cut.
+- Second look at the resumed Benchy: the resume itself worked, but the hull let go of the glass a
+  few layers later. PETG self-releases from glass on cooling, and the bed went 80 to room
+  temperature to 80 across the power cycle. Not a config issue; noted in the README.
