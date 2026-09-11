@@ -9,7 +9,7 @@ Physical Printer (host type Duet, no API key on a password-less Duet).
 |---|---|---|
 | Printer | `Mercury One.1 (Plus) - 0.4mm Nozzle (High Flow)` | RepRapFirmware flavor, bed 365 x 332 origin 0,0, max height 400 (Z travel verified 2026-09-11), relative E, PNG thumbnails for DWC |
 | Print | `0.20mm Standard @MercuryOne` | Voron V2 HF0.4 "Standard" profile resized to this machine's `config.g` limits |
-| Filament | `Overture PETG @MercuryOne` | 245 C nozzle, 80 C bed, fan 30-50 %, no fan on layer 1, 12 mm3/s max volumetric (conservative) |
+| Filament | `Overture PETG @MercuryOne` | 245 C nozzle, 80 C bed, fan 30-50 %, no fan on layer 1, 12 mm3/s max volumetric (conservative), pressure advance `M572 D0 S0.12` in the filament start G-code |
 
 The print and filament presets are tied to the printer through the `PRINTER_MODEL_MERCURY_ONE`
 keyword in Printer Settings > Notes. Keep it if you copy the printer preset.
@@ -27,14 +27,16 @@ keyword in Printer Settings > Notes. Keep it if you copy the printer preset.
   Accelerations (2026-09-10): outer walls 4000, perimeters/infill/default/travel 5000, first layer
   800. Raise them together with `config.g`, not ahead of it.
 - Start / end G-code: `prusaslicer-start.gcode` and `prusaslicer-end.gcode` are the readable source;
-  the bundle embeds the same text. Start G-code waits for the bed, THEN homes (Z0 must be set on a hot bed), loads the saved mesh
-  (`G29 S1`), waits for the hotend, and purges along the front edge.
+  the bundle embeds the same text. Start G-code waits for the bed, THEN homes (Z0 must be set on a
+  hot bed), loads the saved mesh (`G29 S1`), waits for the hotend, and purges along the front edge.
+  End G-code resets pressure advance (`M572 D0 S0`) because RRF keeps the last value across prints.
+- Pressure advance lives in each filament preset's start G-code, not in `config.g`, so a filament
+  without a measured value prints with PA 0 rather than inheriting another filament's number.
 
 ## Regenerating the bundle
 
 Edit in PrusaSlicer, then File > Export > Export Config Bundle and replace the file. Delete the
 `[physical_printer:...]` section and any `print_host` / `printhost_*` values before committing.
 
-The live profiles are on the MacBook Pro (`~/Library/Application Support/PrusaSlicer/`, see
-CLAUDE.md); edit them only with PrusaSlicer closed. The bundle's accelerations, start/end G-code, height and machine limits were synced from the live
-profiles on 2026-09-11; re-export from PrusaSlicer after any other changes.
+The bundle matches the live PrusaSlicer profiles as of 2026-09-11 (accelerations, start/end G-code,
+height, machine limits, pressure advance). Re-export after any other change.

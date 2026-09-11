@@ -39,7 +39,6 @@ M92 E585 ; configure steps per mm  ; measured 2026-09-09: 720 delivered 61.5 mm 
 M566 E300 ; set maximum instantaneous speed changes (mm/min)
 M203 E6000 ; set maximum speeds (mm/min)
 M201 E1500 ; set accelerations (mm/s^2)
-M572 D0 S0.12 ; pressure advance, Overture PETG 245 C, from two towers 2026-09-10: 0.12 sharpest, rounding from 0.16 (at 3000 mm/s2, 8 mm/s jerk)
 
 ; Input shaping: OFF. 2026-09-10 accelerometer measurement (Betaflight FC on the toolhead, 288 Hz): at 250 mm/s,
 ; 6000 mm/s2 the toolhead shows only a weak ~28-30 Hz peak (~0.004 g) and MZV 29 Hz made no measurable difference.
@@ -66,7 +65,7 @@ M574 Z1 S2 ; configure Z axis endstop
 M671 X32.9:332.9:332.9:32.9 Y35.5:37.5:297.5:295.5 P0.55 ; measured 2026-09-09 with the probe pin: front-left, front-right, rear-right, rear-left. P = effective mm per knob turn at the probe point (measured 0.55; thread is M4x0.7). Knob clockwise seen from below = corner DOWN
 
 ; Mesh Bed Compensation
-M557 X30:330 Y30:300 S60:54 ; define grid for mesh bed compensation  ; 6x6; TODO: recompute once G31 X/Y offsets are measured so every probe point is on the bed
+M557 X30:330 Y30:300 S60:54 ; mesh grid, 6x6; with the G31 offsets every point is on the bed (probe reach is X-25..340 Y-23..309), 30 mm margin keeps clear of the bed clips
 
 ; Sensors
 M308 S0 P"bedtemp" Y"thermistor" A"Heated Bed" T100000 B4092 ; configure sensor #0

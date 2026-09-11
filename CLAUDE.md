@@ -2,8 +2,9 @@
 
 RepRapFirmware config for a Zero G Mercury One.1 CoreXY conversion of an Ender 5 Plus,
 driven by a Duet 2 Ethernet (RRF 3.6.0, DWC 3.6). This repo is the source of truth for
-`sys/`; the SD card is the deploy target. `FIRST-RUN.md` is the commissioning checklist
-and running status. `reference/` holds the 2020 Cartesian config this replaced.
+`sys/`; the SD card is the deploy target. `FIRST-RUN.md` is the generic commissioning guide,
+`CHANGELOG.md` the dated measurement log. `reference/` holds the 2020 Cartesian config this replaced.
+The repo is public: no addresses, hostnames of other machines, or personal notes in tracked files.
 
 ## Hardware
 - Toolhead: Rapido 2 hotend (Semitec 104NT-4 thermistor, B4267 C7.06e-8), Sherpa Mini
@@ -16,7 +17,7 @@ and running status. `reference/` holds the 2020 Cartesian config this replaced.
   T8x4 leadscrews (800 steps/mm).
 - Endstops: X max (right), Y max (rear). Bed clips: usable area 0–365 × 0–332, endstops sit
   10 mm / 13 mm beyond it (homing macros `G92` the true position with `M564 S0` around it).
-- Network: `http://10.0.1.22`, hostname `MercuryOne`, no password (default `reprap`).
+- Network: hostname `MercuryOne`, DHCP, no password (default `reprap`). The address lives in the gitignored `.duet-host` (currently 10.0.1.22; mDNS does not resolve from the Mac), read by `scripts/duet.sh`.
 
 ## Workflow
 - The user (and other sessions) edit `sys/config.g` and this file directly. Run `git diff`
@@ -27,6 +28,9 @@ and running status. `reference/` holds the 2020 Cartesian config this replaced.
   machine, one step at a time, and they confirm what they saw.
 - After editing `sys/*`, `scripts/duet.sh push` then either `M999` or `M98 P"config.g"`.
 - `M500` writes `sys/config-override.g` on the card (heater models). Pull before committing.
+- Pressure advance is per filament in the slicer (filament start G-code), never in `config.g`.
+- PrusaSlicer runs on a separate laptop; `slicer/prusaslicer-mercury-one.ini` is exported from it.
+  Edit its presets only while PrusaSlicer is closed, and back up replaced files first.
 
 ## Hard-won rules (2026-09-08)
 - `G30 S-1` leaves the bed AT the trigger point. Always `G1 Z10` before the next probe,

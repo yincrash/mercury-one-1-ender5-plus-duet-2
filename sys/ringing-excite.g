@@ -44,5 +44,5 @@ G1 Y240 F15000
 G4 S1.5
 G1 Y90 F15000
 G4 S2
-M204 P3000 T3000 ; restore
+M204 P5000 T5000 ; restore the M201 values from config.g
 M400

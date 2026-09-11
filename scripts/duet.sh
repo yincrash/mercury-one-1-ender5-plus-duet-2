@@ -4,12 +4,16 @@
 #   scripts/duet.sh push [files...] # upload given files (default: all of ./sys) with CRC + read-back check
 #   scripts/duet.sh gcode 'M115'    # send a G-code and print the reply
 #   scripts/duet.sh model 'heat.heaters[0]'   # query the object model
-# Set DUET_HOST to override the address. The Duet's HTTP session lasts 8 s and the W5500
-# has few sockets, so we reconnect before every request and pause between bulk transfers.
+# The Duet address comes from $DUET_HOST or from a .duet-host file in the repo root (gitignored,
+# one line, e.g. 10.0.1.22). Set DUET_PASSWORD if you changed it from the default "reprap".
+# The Duet's HTTP session lasts 8 s and the W5500 has few sockets, so we reconnect before every
+# request and pause between bulk transfers.
 set -e
-H="http://${DUET_HOST:-10.0.1.22}"
-PW="${DUET_PASSWORD:-reprap}"
 cd "$(dirname "$0")/.."
+host="${DUET_HOST:-$( [ -f .duet-host ] && head -n1 .duet-host )}"
+[ -n "$host" ] || { echo "duet.sh: set DUET_HOST or put the Duet address in .duet-host" >&2; exit 1; }
+H="http://$host"
+PW="${DUET_PASSWORD:-reprap}"
 now() { date +%Y-%m-%dT%H:%M:%S; }
 conn() { curl -s -m 10 "$H/rr_connect?password=$PW&time=$(now)" >/dev/null; }
 enc() { python3 -c 'import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1]))' "$1"; }
