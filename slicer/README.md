@@ -9,7 +9,7 @@ Physical Printer (host type Duet, no API key on a password-less Duet).
 |---|---|---|
 | Printer | `Mercury One.1 (Plus) - 0.4mm Nozzle (High Flow)` | RepRapFirmware flavor, bed 365 x 332 origin 0,0, max height 400 (Z travel verified 2026-09-11), relative E, PNG thumbnails for DWC |
 | Print | `0.20mm Standard @MercuryOne` | Voron V2 HF0.4 "Standard" profile resized to this machine's `config.g` limits |
-| Filament | `Overture PETG @MercuryOne` | 245 C nozzle, 80 C bed, fan 30-50 %, no fan on layer 1, 12 mm3/s max volumetric (conservative), pressure advance `M572 D0 S0.12` in the filament start G-code |
+| Filament | `Overture PETG @MercuryOne` | 245 C nozzle, 80 C bed, fan 30-50 %, no fan on layer 1, 14 mm3/s max volumetric (free-air flow test 2026-09-11: clean to 15, 94 % at 20, 84 % at 25, skips at 30), pressure advance `M572 D0 S0.12` in the filament start G-code |
 
 The print and filament presets are tied to the printer through the `PRINTER_MODEL_MERCURY_ONE`
 keyword in Printer Settings > Notes. Keep it if you copy the printer preset.
