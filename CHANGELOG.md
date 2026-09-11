@@ -51,3 +51,8 @@ Newest at the bottom.
   Overture PETG start G-code) and reset to 0 in the printer end G-code.
 - Stale notes removed (mesh-grid TODO, unverified Z max in the end G-code, ringing macro restoring
   3000 instead of 5000). `configtool.json`, DWC settings and test G-code dropped from the repo.
+- Power-loss recovery tested with a Benchy: mains switched off at Z3.0, `resurrect.g` was written,
+  `M916` resumed the print. The 3 mm emergency bed drop was not visible before the PSU died, and the
+  old prologue only homed X and Y, so `resurrect-prologue.g` now waits for temperatures, drops the
+  bed 5 mm, homes X and Y, re-probes Z with the BLTouch at the front-left mesh point and undoes the
+  retraction. Resumed layer landed at Z3.4 on the next layer.

@@ -47,7 +47,11 @@ If your hardware matches the table above these need no changes:
 - Fan wiring and the thermostatic hotend fan.
 - Motor idle current reduction, the CoreXY jerk policy (`M566 ... P1`) and the extruder limits.
 - `bed.g` structure (probe each screw, `S4` on the last point, so `G32` reports how far to turn each knob).
-- Power-loss recovery (`M911`) and `resurrect-prologue.g`, which homes X and Y without touching Z.
+- Power-loss recovery (`M911`) and `resurrect-prologue.g`. Tested by cutting the mains mid-print: the
+  prologue heats, homes X and Y with the bed dropped clear of the print, then re-probes Z with the
+  BLTouch at the front-left mesh point, so it does not depend on the 3 mm emergency lift having
+  finished before the PSU died. Keep the front-left corner of the bed (about 70 x 70 mm) clear of
+  prints you want to be able to resume.
 - The slicer bundle, apart from the print temperatures and pressure advance, which are per filament.
 
 ## What you must measure or tune on your own machine

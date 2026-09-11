@@ -121,8 +121,10 @@ Put it back afterwards: `M564 H1 S1` (or reboot).
 
 - Power-loss recovery: `M911` in `config.g` drops the XY current, lowers the bed 3 mm and retracts
   when VIN falls below 19.8 V. On power return, `M916` resumes the print (it must have been started
-  from the SD card, which a DWC upload is). Test it once by pulling the mains plug a few layers into
-  a small print.
+  from the SD card, which a DWC upload is). `resurrect-prologue.g` re-probes Z at the front-left
+  mesh point, so that corner must be clear of the print. Test it once by switching the mains off a
+  few layers into a small print; the 3 mm lift may not visibly finish before the PSU dies, which is
+  why the prologue probes instead of trusting the saved Z.
 - Pressure advance: set it in the slicer filament start G-code (`M572 D0 S<value>`), not in
   `config.g`. 0.12 was measured for Overture PETG with this Rapido 2 / Sherpa Mini; tune with
   `scripts/gen_pa_tower.py` or `scripts/pa_tower.py`.
