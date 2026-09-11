@@ -44,6 +44,10 @@ COMMISSIONING COMPLETE.
 by ruler (calipers pending), corner blobs + overhang droop in the recessed letters. Temperature
 tower 255->225 printed (gcodes/, scripts/temp_tower.py). Next: pick temp, PA tower
 (scripts/pa_tower.py), then input shaping (M593) from a dark-filament ringing print.
+2026-09-10: temp 245 C chosen; PA 0.12 (two towers); Honey Badger XY motors at 1600 mA, 250 mm/s,
+3000 mm/s2, jerk 8 mm/s. Input shaping measured with the BetaFPV F411 FC (MSP polling at ~290 Hz
+after `serial_update_rate_hz=2000`, `acc_lpf_hz=500`): no significant ringing at 250 mm/s / 6000
+mm/s2, weak ~29 Hz peak only, shaper left OFF. Printed ringing test still worth a look.
 Still open: verify M208 Z max against the frame.
 Open config TODOs: `G31 X/Y/Z`, `M557`, `M671` + bed.g points, `M92 E`, Z max in `M208`.
 

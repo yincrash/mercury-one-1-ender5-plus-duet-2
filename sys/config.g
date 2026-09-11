@@ -41,6 +41,11 @@ M203 E6000 ; set maximum speeds (mm/min)
 M201 E1500 ; set accelerations (mm/s^2)
 M572 D0 S0.12 ; pressure advance, Overture PETG 245 C, from two towers 2026-09-10: 0.12 sharpest, rounding from 0.16 (at 3000 mm/s2, 8 mm/s jerk)
 
+; Input shaping: OFF. 2026-09-10 accelerometer measurement (Betaflight FC on the toolhead, 288 Hz): at 250 mm/s,
+; 6000 mm/s2 the toolhead shows only a weak ~28-30 Hz peak (~0.004 g) and MZV 29 Hz made no measurable difference.
+; Re-measure if acceleration goes above ~6000 or ringing appears in prints. See measurements/ and scripts/ringing_fft.py.
+M593 P"none"
+
 ; Filament Monitors
 M591 D0 P1 C"e0stop" S1 ; configure simple filament monitor for extruder 0
 
