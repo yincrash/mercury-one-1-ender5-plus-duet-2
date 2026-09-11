@@ -29,6 +29,12 @@ case "$1" in
       conn; if [ "$r" = '{"err":0}' ] && curl -s -m 120 "$H/rr_download?name=0:/sys/$b" | cmp -s - "$f"; then echo "ok $b"; else echo "FAILED $b: $r"; exit 1; fi; sleep 1
     done ;;
   gcode)
+    # Guard: refuse motion / extrusion / temperature / macro commands while a print is running,
+    # unless DUET_FORCE=1. (2026-09-11: a setup script queued G1 Z50 into a running print.)
+    if [ -z "$DUET_FORCE" ] && echo "$2" | grep -qiE '^(G0|G1|G28|G29|G30|G32|M98|M104|M109|M140|M190|M568|M32|M83|M82|G91|G90)\b'; then
+      conn; st=$(curl -s -m 20 "$H/rr_model?key=state.status" | python3 -c 'import json,sys;print(json.load(sys.stdin)["result"])' 2>/dev/null)
+      case "$st" in processing|paused|pausing|resuming|busy) echo "REFUSED: printer is '$st' - not sending '$2' (set DUET_FORCE=1 to override)"; exit 2;; esac
+    fi
     conn; curl -s -m 20 "$H/rr_gcode?gcode=$(enc "$2")" >/dev/null; sleep "${3:-2}"; conn; curl -s -m 20 "$H/rr_reply"; echo ;;
   model)
     conn; curl -s -m 20 "$H/rr_model?key=$(enc "$2")&flags=d99" | python3 -m json.tool ;;

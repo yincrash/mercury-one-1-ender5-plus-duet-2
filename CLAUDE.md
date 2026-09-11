@@ -33,6 +33,10 @@ The repo is public: no addresses, hostnames of other machines, or personal notes
   Edit its presets only while PrusaSlicer is closed, and back up replaced files first.
 
 ## Hard-won rules (2026-09-08)
+- Before ANY motion, extrusion, heater or macro command, read `state.status` and stop if the
+  printer is processing or paused: G-code sent over HTTP is queued straight into the running
+  job (2026-09-11: a `G1 Z50` from a setup script wrecked a print's first layer). `duet.sh gcode`
+  now refuses such commands while printing unless `DUET_FORCE=1`; keep that guard.
 - `G30 S-1` leaves the bed AT the trigger point. Always `G1 Z10` before the next probe,
   otherwise the pin deploys against the bed, the BLTouch faults, and the bed can crash.
 - Re-sending `M558 ... P9` at runtime recreates the probe and wipes `G31`. Re-send `G31`.
