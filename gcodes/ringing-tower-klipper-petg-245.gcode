@@ -623,9 +623,9 @@ M486 S-1
 ; Bed shape 365 x 332, origin 0,0. Use relative E distances.
 M140 S80 ; start heating the bed
 M104 S150 ; warm the hotend without oozing while we home and probe
+M190 S80 ; wait for the bed BEFORE homing
 G28 ; home all (XY to endstops, Z with the BLTouch at the mesh centre)
 G29 S1 ; load the saved height map (heightmap.csv) and enable mesh compensation
-M190 S80 ; wait for bed
 G1 X5 Y3 Z10 F6000 ; move to the purge line start (front-left, inside the usable area)
 M109 S245 ; wait for hotend
 M83 ; relative extrusion
