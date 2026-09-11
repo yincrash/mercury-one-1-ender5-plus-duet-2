@@ -56,3 +56,6 @@ Newest at the bottom.
   old prologue only homed X and Y, so `resurrect-prologue.g` now waits for temperatures, drops the
   bed 5 mm, homes X and Y, re-probes Z with the BLTouch at the front-left mesh point and undoes the
   retraction. Resumed layer landed at Z3.4 on the next layer.
+- Resume seam showed ooze from the nozzle heating while parked on the print. Prologue reordered:
+  home and park at the front-left corner cold, heat there, probe, then a short purge line at Y8
+  replaces the blind 4 mm unretract. Not yet re-tested with a power cut.
