@@ -106,3 +106,8 @@ on the card before the first boot, otherwise `M501` loads stale heater models.
 - Always `G28` between `G32` screw adjustments and `G29`, otherwise the mesh carries a Z offset.
 - The mesh is not loaded at boot. The start G-code runs `G29 S1` after homing.
 - Route the toolhead umbilical clear of the right-hand end of the gantry; it can get pinched at the X endstop.
+
+## License
+
+MIT, see `LICENSE`. The configuration is shared as a starting point; verify every motion and
+heater setting on your own machine before trusting it.
