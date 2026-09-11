@@ -47,7 +47,10 @@ tower 255->225 printed (gcodes/, scripts/temp_tower.py). Next: pick temp, PA tow
 2026-09-10: temp 245 C chosen; PA 0.12 (two towers); Honey Badger XY motors at 1600 mA, 250 mm/s,
 3000 mm/s2, jerk 8 mm/s. Input shaping measured with the BetaFPV F411 FC (MSP polling at ~290 Hz
 after `serial_update_rate_hz=2000`, `acc_lpf_hz=500`): no significant ringing at 250 mm/s / 6000
-mm/s2, weak ~29 Hz peak only, shaper left OFF. Printed ringing test still worth a look.
+mm/s2, weak ~29 Hz peak only, shaper left OFF. Klipper ringing tower (100 mm/s, 5000 mm/s2, no
+shaper): no ringing on Y faces, barely perceptible on X. M201 raised to 5000; PrusaSlicer print
+profile 4000 outer / 5000 other. Start G-code now waits for the bed before G28 (cold home + hot
+print failed a first layer).
 Still open: verify M208 Z max against the frame.
 Open config TODOs: `G31 X/Y/Z`, `M557`, `M671` + bed.g points, `M92 E`, Z max in `M208`.
 

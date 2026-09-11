@@ -29,7 +29,7 @@ M92 X80 Y80 Z800 ; configure steps per mm
 M208 X0:365 Y0:332 Z0:400 ; usable area, measured 2026-09-08: 0,0 = front-left clear of bed clips; endstops sit at X375 Y345 (set by G92 in homing macros); TODO: Z max
 M566 X480 Y480 Z30 P1 ; set maximum instantaneous speed changes (mm/min)  ; 8 mm/s XY (~Klipper SCV 5); Z from old E5+ config; P1 = jerk policy recommended for CoreXY
 M203 X15000 Y15000 Z500 ; set maximum speeds (mm/min)  ; 250 mm/s XY, the untuned/stock-motor consensus for the Mercury One.1 (2026-09-09 survey); Z from old E5+ config
-M201 X3000 Y3000 Z100 ; set accelerations (mm/s^2)  ; untuned at 800 mA; expect 5000-6000 after input shaping (M593), more needs 2 A-class motors
+M201 X5000 Y5000 Z100 ; set accelerations (mm/s^2)  ; 2026-09-10: Klipper ringing tower at 5000 mm/s2, 100 mm/s, no shaper: no measurable ringing; Honey Badgers at 1600 mA also ran 6000 in the accelerometer test
 
 ; Extruders
 M584 E3 ; set extruder mapping
