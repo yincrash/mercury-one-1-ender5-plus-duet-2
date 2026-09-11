@@ -19,6 +19,9 @@ and running status. `reference/` holds the 2020 Cartesian config this replaced.
 - Network: `http://10.0.1.22`, hostname `MercuryOne`, no password (default `reprap`).
 
 ## Workflow
+- The user (and other sessions) edit `sys/config.g` and this file directly. Run `git diff`
+  before every commit and commit only what you changed; never `git add -A` blind
+  (2026-09-10: motor-current and speed edits got swept into unrelated commits unread).
 - Talk to the printer with `scripts/duet.sh` (pull / push / gcode / model). Read-only checks
   are fine to run unattended; anything that moves or heats is done with the user at the
   machine, one step at a time, and they confirm what they saw.
