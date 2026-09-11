@@ -37,18 +37,30 @@ def read_msp(ser):
             if c != chk: continue
             return cmd, payload
 
-ser = serial.Serial(a.port, 1000000, timeout=0.2)
+ser = serial.Serial(a.port, 1000000, timeout=0.05)
 time.sleep(0.5); ser.reset_input_buffer()
+# Pipelined: keep DEPTH requests in flight. Requires `set serial_update_rate_hz = 2000` on the
+# FC (default 100 caps this at ~60 Hz) and `set acc_lpf_hz = 500` (default 25 Hz would smear
+# the ringing band). Achieves ~300 Hz on an F411 over USB.
+DEPTH = 16
 req = msp_request(MSP_RAW_IMU)
-rows = []; t0 = time.monotonic(); n = 0
+rows = []; buf = b''; t0 = time.monotonic(); n = 0; last_print = 0
 print(f'logging for {a.seconds:.0f} s ... (start the printer moves now)', flush=True)
+ser.write(req * DEPTH)
 while time.monotonic() - t0 < a.seconds:
-    ser.write(req)
-    r = read_msp(ser)
-    if r is None or r[0] != MSP_RAW_IMU or len(r[1]) < 12: continue
-    ax, ay, az, gx, gy, gz = struct.unpack('<6h', r[1][:12])
-    rows.append((time.monotonic() - t0, ax, ay, az, gx, gy, gz)); n += 1
-    if n % 500 == 0: print(f'  {n} samples, {n/(time.monotonic()-t0):.0f} Hz', flush=True)
+    buf += ser.read(4096)
+    while True:
+        i = buf.find(b'$M>')
+        if i < 0 or len(buf) < i + 5: break
+        size = buf[i + 3]; cmd = buf[i + 4]
+        if len(buf) < i + 6 + size: break
+        payload = buf[i + 5:i + 5 + size]; buf = buf[i + 6 + size:]
+        if cmd == MSP_RAW_IMU and size >= 12:
+            ax, ay, az, gx, gy, gz = struct.unpack('<6h', payload[:12])
+            rows.append((time.monotonic() - t0, ax, ay, az, gx, gy, gz)); n += 1
+            ser.write(req)
+    if n - last_print >= 1000:
+        last_print = n; print(f'  {n} samples, {n/(time.monotonic()-t0):.0f} Hz', flush=True)
 ser.close()
 with open(a.out, 'w') as f:
     f.write('t,ax,ay,az,gx,gy,gz\n')
