@@ -3,9 +3,9 @@
 ; Bed shape 365 x 332, origin 0,0. Use relative E distances.
 M140 S[first_layer_bed_temperature] ; start heating the bed
 M104 S150 ; warm the hotend without oozing while we home and probe
+M190 S[first_layer_bed_temperature] ; wait for the bed BEFORE homing: Z0 must be set on a hot bed (2026-09-10: cold home + hot print = failed first layer)
 G28 ; home all (XY to endstops, Z with the BLTouch at the mesh centre)
 G29 S1 ; load the saved height map (heightmap.csv) and enable mesh compensation
-M190 S[first_layer_bed_temperature] ; wait for bed
 G1 X5 Y3 Z10 F6000 ; move to the purge line start (front-left, inside the usable area)
 M109 S[first_layer_temperature] ; wait for hotend
 M83 ; relative extrusion
