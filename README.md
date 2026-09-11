@@ -38,16 +38,16 @@ a clear list of what to copy and what to measure on their own machine.
 
 If your hardware matches the table above these need no changes:
 
-- Kinematics, driver mapping, microstepping and XY / Z steps per mm (`M669`, `M584`, `M350`, `M92 X Y Z`).
+- Kinematics, driver mapping, microstepping and XY / Z steps per mm ([`M669`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M669), [`M584`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M584), [`M350`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M350), [`M92 X Y Z`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M92)).
 - The homing macros. The endstops sit beyond the usable bed area, so the macros home at full travel plus
-  a margin and then `G92` the true position, with `M564 S0` around it so RRF accepts a position past `M208`.
-- The BLTouch setup: `M558 ... R0.5`, `deployprobe0.g` with its 500 ms dwell, `retractprobe0.g`.
+  a margin and then [`G92`](https://docs.duet3d.com/User_manual/Reference/Gcodes/G92) the true position, with [`M564 S0`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M564) around it so RRF accepts a position past [`M208`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M208).
+- The BLTouch setup: [`M558 ... R0.5`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M558), `deployprobe0.g` with its 500 ms dwell, `retractprobe0.g`.
   These dwells are what stops the pin being driven into the bed. Keep them.
-- The thermistor definitions and the heater fault monitors (`M308`, `M143`).
+- The thermistor definitions and the heater fault monitors ([`M308`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M308), [`M143`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M143)).
 - Fan wiring and the thermostatic hotend fan.
-- Motor idle current reduction, the CoreXY jerk policy (`M566 ... P1`) and the extruder limits.
-- `bed.g` structure (probe each screw, `S4` on the last point, so `G32` reports how far to turn each knob).
-- Power-loss recovery (`M911`) and `resurrect-prologue.g`. Tested by cutting the mains mid-print: the
+- Motor idle current reduction, the CoreXY jerk policy ([`M566 ... P1`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M566)) and the extruder limits.
+- `bed.g` structure (probe each screw, `S4` on the last point, so [`G32`](https://docs.duet3d.com/User_manual/Reference/Gcodes/G32) reports how far to turn each knob).
+- Power-loss recovery ([`M911`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M911)) and `resurrect-prologue.g`. Tested by cutting the mains mid-print: the
   prologue heats the nozzle so it releases from the print, homes X and Y with the bed dropped
   clear of the print, parks at the front-left corner, waits for the bed there so nothing oozes
   onto the print, re-probes Z with the BLTouch at the front-left mesh point, and lays a short
@@ -66,20 +66,20 @@ Work through `FIRST-RUN.md`; it covers each of these in order. In `config.g`:
 
 | Setting | Why it is machine-specific |
 |---|---|
-| `M569 S` for every driver | Motor wiring. Verify direction before homing. |
-| `M208` limits and the `G92 X375 Y345` values in `homeall.g` / `homex.g` / `homey.g` | Where your endstops actually sit relative to the bed. |
-| `G31 X Y Z` | Probe offset and trigger height depend on your BLTouch mount and nozzle. |
-| `M671` and the four `G30 P` points in `bed.g` | Bed screw positions, measured with the probe over each screw. Keep the order the same in both places. |
-| `M557` | Mesh grid; every point plus the `G31` offset must land on the bed. |
-| `M92 E` | Extruder steps. Clone gearing varies; this one measured 585, not the nominal 720. |
-| `M906` | Motor currents. These are for the motors listed above; use 60 to 85 % of your motor's rating. |
-| `M307` (via `M303` then `M500`) | Heater models. Re-tune with your own hotend, bed and fans. |
-| `M203`, `M201` | Speeds and accelerations. 250 mm/s and 5000 mm/s² were verified here with a ringing tower and an accelerometer. Start lower if your motors or currents differ. |
-| `M591` | Filament sensor. This config enables a switch on `e0stop`. If you have no sensor, remove or comment out the `M591` line, or every print will pause immediately. |
-| `M593` | Input shaping is off because measurements showed no ringing worth shaping at these settings. Measure your own frame before enabling it. |
+| [`M569 S`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M569) for every driver | Motor wiring. Verify direction before homing. |
+| [`M208`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M208) limits and the [`G92 X375 Y345`](https://docs.duet3d.com/User_manual/Reference/Gcodes/G92) values in `homeall.g` / `homex.g` / `homey.g` | Where your endstops actually sit relative to the bed. |
+| [`G31 X Y Z`](https://docs.duet3d.com/User_manual/Reference/Gcodes/G31) | Probe offset and trigger height depend on your BLTouch mount and nozzle. |
+| [`M671`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M671) and the four [`G30 P`](https://docs.duet3d.com/User_manual/Reference/Gcodes/G30) points in `bed.g` | Bed screw positions, measured with the probe over each screw. Keep the order the same in both places. |
+| [`M557`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M557) | Mesh grid; every point plus the [`G31`](https://docs.duet3d.com/User_manual/Reference/Gcodes/G31) offset must land on the bed. |
+| [`M92 E`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M92) | Extruder steps. Clone gearing varies; this one measured 585, not the nominal 720. |
+| [`M906`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M906) | Motor currents. These are for the motors listed above; use 60 to 85 % of your motor's rating. |
+| [`M307`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M307) (via [`M303`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M303) then [`M500`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M500)) | Heater models. Re-tune with your own hotend, bed and fans. |
+| [`M203`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M203), [`M201`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M201) | Speeds and accelerations. 250 mm/s and 5000 mm/s² were verified here with a ringing tower and an accelerometer. Start lower if your motors or currents differ. |
+| [`M591`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M591) | Filament sensor. This config enables a switch on `e0stop`. If you have no sensor, remove or comment out the [`M591`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M591) line, or every print will pause immediately. |
+| [`M593`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M593) | Input shaping is off because measurements showed no ringing worth shaping at these settings. Measure your own frame before enabling it. |
 
 Pressure advance is not in `config.g`. It is set per filament in the slicer's filament start G-code
-(`M572 D0 S0.12` for the Overture PETG preset) and reset to 0 in the printer end G-code.
+([`M572 D0 S0.12`](https://docs.duet3d.com/User_manual/Reference/Gcodes/M572) for the Overture PETG preset) and reset to 0 in the printer end G-code.
 
 ## Deploying
 
