@@ -1,3 +1,5 @@
 *.bin
 *.uf2
 .DS_Store
+sys/heightmap.csv
+sys/resurrect.g
