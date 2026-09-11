@@ -26,7 +26,7 @@ M584 X0 Y1 Z2 ; set axis mapping
 M350 X16 Y16 Z16 I1 ; configure microstepping with interpolation
 M906 X1600 Y1600 Z800 ; set axis driver currents  ; XY: Fabreeko Honey Badger 42HS48-25044A, 2.5 A rated (1.25 ohm, 1.8 mH, ~54 N.cm); 1600 mA = 64 % of rated, RRF guidance 60-85 %, TMC2660 max 2.4 A; 800 mA was the old stock-motor value. Z: two stock Creality 42-34 in series (0.8 A rated, 34 mm), 800 mA is 100 % of rated; fine for intermittent Z moves with I30 idle, do not raise
 M92 X80 Y80 Z800 ; configure steps per mm
-M208 X0:365 Y0:332 Z0:400 ; usable area, measured 2026-09-08: 0,0 = front-left clear of bed clips; endstops sit at X375 Y345 (set by G92 in homing macros); TODO: Z max
+M208 X0:365 Y0:332 Z0:400 ; usable area, measured 2026-09-08: 0,0 = front-left clear of bed clips; endstops sit at X375 Y345 (set by G92 in homing macros); Z400 verified clear of the electronics enclosure 2026-09-11
 M566 X480 Y480 Z30 P1 ; set maximum instantaneous speed changes (mm/min)  ; 8 mm/s XY (~Klipper SCV 5); Z from old E5+ config; P1 = jerk policy recommended for CoreXY
 M203 X15000 Y15000 Z500 ; set maximum speeds (mm/min)  ; 250 mm/s XY, the untuned/stock-motor consensus for the Mercury One.1 (2026-09-09 survey); Z from old E5+ config
 M201 X5000 Y5000 Z100 ; set accelerations (mm/s^2)  ; 2026-09-10: Klipper ringing tower at 5000 mm/s2, 100 mm/s, no shaper: no measurable ringing; Honey Badgers at 1600 mA also ran 6000 in the accelerometer test

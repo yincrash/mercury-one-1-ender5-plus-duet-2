@@ -51,7 +51,7 @@ mm/s2, weak ~29 Hz peak only, shaper left OFF. Klipper ringing tower (100 mm/s, 
 shaper): no ringing on Y faces, barely perceptible on X. M201 raised to 5000; PrusaSlicer print
 profile 4000 outer / 5000 other. Start G-code now waits for the bed before G28 (cold home + hot
 print failed a first layer).
-Still open: verify M208 Z max against the frame.
+2026-09-11: Z max 400 verified by jogging (clear of the Ender 5 Plus electronics enclosure); slicer max height 400.
 Open config TODOs: `G31 X/Y/Z`, `M557`, `M671` + bed.g points, `M92 E`, Z max in `M208`.
 
 ## 0. Before uploading
