@@ -33,3 +33,5 @@ keyword in Printer Settings > Notes. Keep it if you copy the printer preset.
 
 Edit in PrusaSlicer, then File > Export > Export Config Bundle and replace the file. Delete the
 `[physical_printer:...]` section and any `print_host` / `printhost_*` values before committing.
+- Accelerations (2026-09-10, after a clean ringing tower at 5000, no shaper): outer walls 4000, perimeters/infill/default/travel 5000; first layer 800. Printer machine limits 5000 (time estimates only). Firmware M201 5000.
+- Profile files live on the MacBook Pro (see CLAUDE.md); edit only with PrusaSlicer closed.
