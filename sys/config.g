@@ -39,7 +39,7 @@ M92 E585 ; configure steps per mm  ; measured 2026-09-09: 720 delivered 61.5 mm 
 M566 E300 ; set maximum instantaneous speed changes (mm/min)
 M203 E6000 ; set maximum speeds (mm/min)
 M201 E1500 ; set accelerations (mm/s^2)
-M572 D0 S0.11 ; pressure advance, Overture PETG 245 C: first tower 0-0.11 had no over-advance yet, second tower pending
+M572 D0 S0.12 ; pressure advance, Overture PETG 245 C, from two towers 2026-09-10: 0.12 sharpest, rounding from 0.16 (at 3000 mm/s2, 8 mm/s jerk)
 
 ; Filament Monitors
 M591 D0 P1 C"e0stop" S1 ; configure simple filament monitor for extruder 0
