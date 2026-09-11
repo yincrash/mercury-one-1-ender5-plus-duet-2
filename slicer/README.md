@@ -36,5 +36,5 @@ Edit in PrusaSlicer, then File > Export > Export Config Bundle and replace the f
 `[physical_printer:...]` section and any `print_host` / `printhost_*` values before committing.
 
 The live profiles are on the MacBook Pro (`~/Library/Application Support/PrusaSlicer/`, see
-CLAUDE.md); edit them only with PrusaSlicer closed. **The bundle here is behind the live profiles
-since 2026-09-10** (accelerations, start G-code order, max height): re-export it before relying on it.
+CLAUDE.md); edit them only with PrusaSlicer closed. The bundle's accelerations, start/end G-code, height and machine limits were synced from the live
+profiles on 2026-09-11; re-export from PrusaSlicer after any other changes.
