@@ -24,8 +24,13 @@ keyword in Printer Settings > Notes. Keep it if you copy the printer preset.
   Input shaping was measured (accelerometer + Klipper ringing tower at 5000 mm/s^2): no ringing
   worth shaping, `M593` stays off.
 - Print speeds sit under those limits: perimeters 120 / external 80 / infill 200 / travel 250 mm/s.
-  Accelerations (2026-09-10): outer walls 4000, perimeters/infill/default/travel 5000, first layer
-  800. Raise them together with `config.g`, not ahead of it.
+  Accelerations: outer walls 4000, perimeters/infill/default 5000, travel 3000, first layer 800.
+  Travel came down from 5000 on 2026-09-11 after hot XY motors stalled on 200 mm/s travels (a
+  travel is the one move that puts a single CoreXY motor at 1.41x the speed and acceleration,
+  from a dead stop). Raise them together with `config.g`, not ahead of it.
+- Infill is cubic. Honeycomb at 40 % produced about a thousand sub-millimetre segments per layer,
+  which keeps both motors in full-acceleration reversals for the whole infill and leaves blobs at
+  the hex corners for travels to clip; use it only for parts that truly need its Z compression.
 - Start / end G-code: `prusaslicer-start.gcode` and `prusaslicer-end.gcode` are the readable source;
   the bundle embeds the same text. Start G-code waits for the bed, THEN homes (Z0 must be set on a
   hot bed), loads the saved mesh (`G29 S1`), waits for the hotend, and purges along the front edge.
