@@ -63,3 +63,19 @@ Newest at the bottom.
 - Second look at the resumed Benchy: the resume itself worked, but the hull let go of the glass a
   few layers later. PETG self-releases from glass on cooling, and the bed went 80 to room
   temperature to 80 across the power cycle. Not a config issue; noted in the README.
+
+## 2026-09-11 evening — layer shifts traced to hot-motor stalls
+
+- Several PETG prints shifted diagonally toward -X +Y at full speed. `sys/endstop-check.g`
+  (H4 creep onto each endstop, no reset) read X +4.0 / Y -4.0 mm: motor B alone lost 8 mm of belt,
+  ten electrical cycles. Pulley and belt checked tight, drivers reported no temperature warnings.
+- `sys/corexy-stress.g` (pure motor-A and motor-B diagonals, then endstop re-check): cold motors
+  held position at 250 mm/s vector (354 mm/s per motor) and 5000 mm/s²; the same test with motors
+  hot from 12 layers of printing lost 25 mm on Y, i.e. both motors stalling. Every earlier motion
+  test (ringing tower, 6000 mm/s² accelerometer run) had been done cold.
+- The print was 40 % honeycomb at 172 mm/s: about a thousand sub-millimetre segments per layer, so
+  both motors sat in full-acceleration reversals for the whole infill and then took a 200 mm/s
+  travel from a dead stop at 7070 mm/s² on one motor.
+- Changes: `M906 X2000 Y2000` (80 % of rated), slicer travel acceleration 5000 to 3000, default
+  infill honeycomb to cubic. Check A/B motor case temperature after the next long print.
+
