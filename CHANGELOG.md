@@ -84,3 +84,10 @@ Newest at the bottom.
   its A/B current formula (rated x 0.707 x 0.8, RMS) works out to 2.0 A peak, i.e. `M906 X2000
   Y2000`. Current restored to 2000; belts to be set to spec; motor and board fans to be fitted.
 
+## 2026-09-14 — back to 1600 mA
+
+- 16 h print at 2000 mA with retensioned belts, travel acceleration 3000 and cubic infill: no layer
+  shift. The stall had been belt drag plus the 5000 travel acceleration, not a current shortfall.
+  `M906 X1600 Y1600` restored for cooler motors and drivers; raise again only if higher accelerations
+  start losing steps.
+
