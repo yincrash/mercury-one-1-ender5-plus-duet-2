@@ -78,4 +78,9 @@ Newest at the bottom.
   travel from a dead stop at 7070 mm/s² on one motor.
 - Changes: `M906 X2000 Y2000` (80 % of rated), slicer travel acceleration 5000 to 3000, default
   infill honeycomb to cubic. Check A/B motor case temperature after the next long print.
+- 2026-09-13: a 5 h cubic-infill print at 1300 mA with the belts loosened to about 75 Hz on the
+  front span came out clean, so the original belts may have been over-tight and adding drag.
+  Zero G's manual wants 110 to 120 Hz on the span between tension tower and toothed idler, and
+  its A/B current formula (rated x 0.707 x 0.8, RMS) works out to 2.0 A peak, i.e. `M906 X2000
+  Y2000`. Current restored to 2000; belts to be set to spec; motor and board fans to be fitted.
 
