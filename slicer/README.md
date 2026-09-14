@@ -18,12 +18,20 @@ keyword in Printer Settings > Notes. Keep it if you copy the printer preset.
 
 - Printer: started from PrusaSlicer's `VORON V2 350mm - 0.4mm Nozzle (High Flow)` (closest CoreXY /
   direct-drive match), then flavor, bed, height, notes and machine limits changed. Retraction 0.8 mm
-  at 35 mm/s (Sherpa Mini direct drive; 0.8-1.2 is the range to tune within).
+  at 45 mm/s with wipe on and a 0.5 mm Z-hop from layer 1 (2026-09-11: first-layer blobs and ooze on
+  PETG; was 35 mm/s, no wipe, no hop below Z0.25). The Rapido HF holds more melt than a standard
+  hotend; do not go past about 1.5 mm.
+- Avoid crossing perimeters is off. It was tried on 2026-09-11 so PETG ooze would land on plastic
+  rather than bare glass, but its travels ride along fresh perimeters and a 0.2 mm hop let the nozzle
+  catch curled corners and skip belt teeth on the first layer; the 0.5 mm hop stays.
 - Machine limits mirror `sys/config.g` (M203 / M201 / M566) and are used for time estimates only.
   As of 2026-09-10: 250 mm/s, 5000 mm/s^2, 8 mm/s jerk in XY, Honey Badger motors at 1600 mA.
   Input shaping was measured (accelerometer + Klipper ringing tower at 5000 mm/s^2): no ringing
   worth shaping, `M593` stays off.
-- Print speeds sit under those limits: perimeters 120 / external 80 / infill 200 / travel 250 mm/s.
+- Print speeds sit under those limits: perimeters 120 / external 80 / infill 200 / travel 200 mm/s.
+  Travel was 250 until 2026-09-11: a long 45-degree travel puts one CoreXY motor at 1.41x the axis
+  speed (354 mm/s at 250) and that skipped on the first layer of the IEC skirt; 200 keeps the worst
+  case at 283 mm/s. `M203` stays at 250 as the ceiling.
   Accelerations: outer walls 4000, perimeters/infill/default 5000, travel 3000, first layer 800.
   Travel came down from 5000 on 2026-09-11 after hot XY motors stalled on 200 mm/s travels (a
   travel is the one move that puts a single CoreXY motor at 1.41x the speed and acceleration,
@@ -44,4 +52,5 @@ Edit in PrusaSlicer, then File > Export > Export Config Bundle and replace the f
 `[physical_printer:...]` section and any `print_host` / `printhost_*` values before committing.
 
 The bundle matches the live PrusaSlicer profiles as of 2026-09-11 (accelerations, start/end G-code,
-height, machine limits, pressure advance). Re-export after any other change.
+height, machine limits, pressure advance, retraction/wipe, first-layer infill speed and temperature).
+Re-export after any other change.

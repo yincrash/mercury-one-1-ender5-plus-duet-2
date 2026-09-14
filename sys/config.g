@@ -38,7 +38,7 @@ M906 E800 ; set extruder driver currents  ; Sherpa Mini clone motor is 1.0 A rat
 M92 E585 ; configure steps per mm  ; measured 2026-09-09: 720 delivered 61.5 mm per 50 commanded (clone gearing is not 50:10)
 M566 E300 ; set maximum instantaneous speed changes (mm/min)
 M203 E6000 ; set maximum speeds (mm/min)
-M201 E1500 ; set accelerations (mm/s^2)
+M201 E5000 ; set accelerations (mm/s^2)  ; 2026-09-11: 1500 made a 0.8 mm retraction accel-limited (never reached 35 mm/s, ~0.4 mm ramp each way); 5000 so retractions snap. Sherpa clone at 800 mA
 
 ; Input shaping: OFF. 2026-09-10 accelerometer measurement (Betaflight FC on the toolhead, 288 Hz): at 250 mm/s,
 ; 6000 mm/s2 the toolhead shows only a weak ~28-30 Hz peak (~0.004 g) and MZV 29 Hz made no measurable difference.
